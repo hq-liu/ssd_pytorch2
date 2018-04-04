@@ -37,19 +37,19 @@ def train():
         for batch_idx, (images, loc_targets, conf_targets) in enumerate(trainloader):
             print(batch_idx, images.size(), loc_targets.size(), conf_targets.size())
             pass
-            # images = Variable(images)
-            # # print(images)
-            # loc_targets = Variable(loc_targets)
-            # conf_targets = Variable(conf_targets)
-            # optimizer.zero_grad()
-            # loc_preds, conf_preds = net(images)
-            #
-            # loss = criterion(loc_preds, loc_targets, conf_preds, conf_targets)
-            # if loss.data[0] != 0:
-            #     loss.backward()
-            #     optimizer.step()
-            # train_loss += loss.data[0]
-            # print('%.3f %.3f' % (loss.data[0], train_loss/(batch_idx+1)))
+            images = Variable(images)
+            # print(images)
+            loc_targets = Variable(loc_targets)
+            conf_targets = Variable(conf_targets)
+            optimizer.zero_grad()
+            loc_preds, conf_preds = net(images)
+            
+            loss = criterion(loc_preds, loc_targets, conf_preds, conf_targets)
+            if loss.data[0] != 0:
+                loss.backward()
+                optimizer.step()
+            train_loss += loss.data[0]
+            print('%.3f %.3f' % (loss.data[0], train_loss/(batch_idx+1)))
         print('\n')
     torch.save(net.state_dict(), './layers/model/ssd300_4.pth')
 
